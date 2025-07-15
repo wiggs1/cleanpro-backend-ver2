@@ -19,16 +19,39 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Simple test route
+// ✅ Booking Schema
+const bookingSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  date: String,
+  service: String,
+  time: String,
+  notes: String
+});
+const Booking = mongoose.model('Booking', bookingSchema);
+
+// ✅ POST /api/bookings Route
+app.post('/api/bookings', async (req, res) => {
+  try {
+    const newBooking = new Booking(req.body);
+    await newBooking.save();
+    res.status(201).json({ message: 'Booking saved successfully' });
+  } catch (err) {
+    console.error('Booking error:', err);
+    res.status(500).json({ error: 'Failed to save booking' });
+  }
+});
+
+// ✅ Simple test route
 app.get('/api/test', (req, res) => {
   res.json({ message: "API is working!" });
 });
 
-// Static files
+// ✅ Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start server
+// ✅ Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
