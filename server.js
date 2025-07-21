@@ -32,7 +32,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // Booking model (you can define this inline or import from a separate file)
-const mongoose = require('mongoose');
+
 
 const bookingSchema = new mongoose.Schema({
   name: String,
