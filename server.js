@@ -9,8 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-// Middleware
-const cors = require('cors');
+
 
 app.use(cors({
   origin: 'https://whelanswebservices.com', // allow only your frontend domain
